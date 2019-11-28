@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export interface CounterButtonState {
   numberOfClicks: number;
@@ -16,4 +16,3 @@ export class CounterButton extends React.Component<{}, CounterButtonState> {
     return <button>{this.state.numberOfClicks}</button>;
   }
 }
-

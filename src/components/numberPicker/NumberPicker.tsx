@@ -37,10 +37,12 @@ export class NumberPicker extends React.Component<NumberPickerProps, NumberPicke
   }
 
   render() {
-    return <div>
-      <button onClick={this.incrementCounter}>+</button>
-      <h1>{this.state.counter}</h1>
-      <button onClick={this.decrementCounter}>-</button>
-    </div>
+    return (
+      <div>
+        <button onClick={this.incrementCounter}>+</button>
+        <h1>{this.state.counter}</h1>
+        <button onClick={this.decrementCounter}>-</button>
+      </div>
+    );
   }
 }
