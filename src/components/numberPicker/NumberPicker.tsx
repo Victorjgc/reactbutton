@@ -1,48 +1,51 @@
 import React from "react";
+import { connect } from "react-redux";
+import { incrementCounter, decrementCounter } from "../../actions/index";
 
 interface NumberPickerProps {
   initialCounter?: number;
-  onIncrement?: (newValue: number) => void;
+  incrementCounter?: (newValue: number) => void;
+  decrementCounter?: (newValue: number) => void;
+  counter?: number;
 }
 
-interface NumberPickerState {
-  counter: number;
-}
-
-export class NumberPicker extends React.Component<NumberPickerProps, NumberPickerState> {
+export class NumberPicker extends React.Component<NumberPickerProps> {
   constructor(props) {
     super(props);
-    this.state = {
-      counter: this.props.initialCounter || 0
-    };
-    this.incrementCounter = this.incrementCounter.bind(this);
-    this.decrementCounter = this.decrementCounter.bind(this);
+
+    this.increment = this.increment.bind(this);
+    this.decrement = this.decrement.bind(this);
   }
 
-  updateCounter(delta: number) {
-    this.setState({
-      counter: this.state.counter + delta
-    });
+  increment() {
+    if (this.props.incrementCounter) {
+      this.props.incrementCounter(3);
+    }
   }
 
-  decrementCounter() {
-    this.updateCounter(-1);
-  }
-
-  incrementCounter() {
-    this.updateCounter(1);
-    if (this.props.onIncrement) {
-      this.props.onIncrement(this.state.counter);
+  decrement() {
+    if (this.props.decrementCounter) {
+      this.props.decrementCounter(3);
     }
   }
 
   render() {
     return (
       <div>
-        <button onClick={this.incrementCounter}>+</button>
-        <h1>{this.state.counter}</h1>
-        <button onClick={this.decrementCounter}>-</button>
+        <button onClick={this.increment}>+</button>
+        <h1>{this.props.counter || 0}</h1>
+        <button onClick={this.decrement}>-</button>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state: any) => {
+  return { counter: state.counter.value };
+};
+
+const mapDispatchToProps = dispatch => ({
+  incrementCounter: (value: number) => dispatch(incrementCounter(value)),
+  decrementCounter: (value: number) => dispatch(decrementCounter(value))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(NumberPicker);
